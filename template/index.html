@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SINAM-IOT</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="../../assets/images/favicon.png"/>
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:../../partials/_sidebar.html -->
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
+            <a class="sidebar-brand brand-logo" href="../../index.html"><img src="../../assets/images/logo.png"
+                                                                             alt="logo"/></a>
+            <a class="sidebar-brand brand-logo-mini" href="../../index.html"><img
+                    src="../../assets/images/logo-mini.svg" alt="logo"/></a>
+        </div>
+        <ul class="nav">
+            <li class="nav-item nav-category">
+                <span class="nav-link">Navigation</span>
+            </li>
+            <li class="nav-item menu-items">
+                <a class="nav-link" href="../../index.html">
+                          <span class="menu-icon">
+                            <i class="mdi mdi-speedometer"></i>
+                          </span>
+                    <span class="menu-title">Göstərici</span>
+                </a>
+            </li>
+
+            <li class="nav-item menu-items">
+                <a class="nav-link" href="../../pages/tables/basic-table.html">
+              <span class="menu-icon">
+                <i class="mdi mdi-table-large"></i>
+              </span>
+                    <span class="menu-title">Sayğac</span>
+                </a>
+            </li>
+            <li class="nav-item menu-items">
+                <a class="nav-link" href="../../pages/forms/config.html">
+                          <span class="menu-icon">
+                            <i class="mdi mdi-playlist-play"></i>
+                          </span>
+                    <span class="menu-title">Konfiqurasiya</span>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+    <!-- Modal -->
+
+    <div id="showDataModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="width: 150%;height: 150%">
+                <div class="modal-header">
+                    <h4 class="modal-title">Sayğac</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="forms-sample">
+                        <div class="form-group">
+                            <label for="datePicStart">Başlanma tarixi</label>
+                            <input type="date" class="form-control" id="datePicStart"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="datePicEnd">Bitmə tarixi</label>
+                            <input type="date" class="form-control" id="datePicEnd"
+                            >
+                        </div>
+                    </form>
+                    <div class="table-responsive">
+                        <table class="table filtered-table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Smart reader №</th>
+                                <th>Göstərici</th>
+                                <th>Tarix</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="filter-table" class="btn btn-primary mr-2">Filterlə
+                    </button>
+                    <button type="button" class="btn btn-default closeShowModal" data-dismiss="modal">Bağla</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="showSubUnitModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="width: 150%;height: 150%">
+                <div class="modal-header">
+                    <h4 class="modal-title">Sayğac</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table grouped-table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Smart reader №</th>
+                                <th>Sayğac №</th>
+                                <th>Göstərici</th>
+                                <th>Tarix</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default closeShowModal" data-dismiss="modal">Bağla</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div id="showTimeDataModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="width: 150%;height: 150%">
+                <div class="modal-header">
+                    <h4 class="modal-title">Sayğac</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table time-table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tarix</th>
+                                <th>Göstərici</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Bağla</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_navbar.html -->
+        <nav class="navbar p-0 fixed-top d-flex flex-row">
+            <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo-mini" href="../../index.html"><img
+                        src="../../assets/images/logo-mini.svg" alt="logo"/></a>
+            </div>
+            <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                        data-toggle="offcanvas">
+                    <span class="mdi mdi-format-line-spacing"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h3 class="page-title"> Sayğac </h3>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Sayğac cədvəli</h4>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Sayğac №</th>
+                                            <th>Smart reader №</th>
+                                            <th>Tip</th>
+                                            <th>Cari Göstərici</th>
+                                            <th>Toplu/Fərdi</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:../../partials/_footer.html -->
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center justify-content-sm-between">
+
+                </div>
+            </footer>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script src="../../assets/js/off-canvas.js"></script>
+<script src="../../assets/js/hoverable-collapse.js"></script>
+<script src="../../assets/js/misc.js"></script>
+<script src="../../assets/js/settings.js"></script>
+<script src="../../assets/js/todolist.js"></script>
+<!-- endinject -->
+<!-- Custom js for this page -->
+<!-- End custom js for this page -->
+<script>
+    $(document).on('click', '#save-counter', function () {
+        let model = {};
+        model.counterId = document.getElementById("exampleInputUsername1").value
+        model.type = $('#exampleInputUsername3 :selected').val();
+        model.smartReaderId = document.getElementById("exampleInputUsername2").value
+        model.unit = document.getElementById("exampleInputUsername4").value
+        $.ajax({
+            type: "POST",
+            url: `http://xxx.xx.xxx.xxx:8082/api/add/unit`,
+            data: JSON.stringify(model),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            success: function () {
+                fillTable()
+            }
+        });
+        document.getElementById("exampleInputUsername1").value = null
+        document.getElementById("exampleInputUsername2").value = null
+        document.getElementById("exampleInputUsername4").value = null
+    })
+
+
+    $(document).ready(function () {
+        fillTable()
+    });
+
+    $(document).on('click', '.showData', function () {
+        let row = $(this).data("row")
+        $("#filter-table").data("smartReaderId", row.smartReaderId);
+        let startDate = document.getElementById("datePicStart").value;
+        let endDate = document.getElementById("datePicEnd").value;
+        $.get(`http://xxx.xx.xxx.xxx:8082/api/filtered-unit?smartReaderId=` + row.smartReaderId + '&startDate=' + startDate + '&endDate=' + endDate, function (data, status) {
+            $('.filtered-table tbody').empty()
+            let tbody = "";
+            data.forEach(function (item, index) {
+                tbody += ` <tr>
+                       <td>${index + 1}</td>
+                       <td>${item.smartReaderId}</td>
+                       <td>${item.unit ? item.unit : 0}</td>
+                       <td>${item.date}</td>
+                       <td><button type="button" class="btn btn-info btn-sm showTimeData" data-toggle="modal"
+                                                        data-target="#showTimeDataModal" data-row=${JSON.stringify(item)}>Ətraflı
+                                                </button></td>
+
+                       </tr>`
+            })
+            $('.filtered-table tbody').append(tbody)
+        });
+    })
+
+    $(document).on('click', '.showTimeData', function () {
+        let row = $(this).data("row")
+        $("#time-table").data("smartReaderId", row.smartReaderId);
+        $('.time-table tbody').empty()
+        let tbody = "";
+        row.unitAndTimes.forEach(function (item, index) {
+            tbody += ` <tr>
+                       <td>${index + 1}</td>
+                       <td>${item.time}</td>
+                       <td>${item.unit ? item.unit : 0}</td>
+
+                       </tr>`
+        });
+        $('.time-table tbody').append(tbody)
+    })
+
+    function fillTable() {
+        $.get(`http://xxx.xx.xxx.xxx:8082/api/units`, function (data, status) {
+            $('.table tbody').empty()
+            let tbody = "";
+            data.forEach(function (item, index) {
+                tbody += ` <tr>
+                       <td>${index + 1}</td>
+                       <td>${item.counterId ? item.counterId : ""}</td>
+                       <td>${item.smartReaderId}</td>
+                       <td>${item.type == 1 ? 'QS-GT4' : item.type == 2 ? 'QS-GT6' : ""}</td>
+                       <td>${item.unit ? item.unit : 0}</td>
+                       <td>${item.type == 1 ? 'Fərdi' : item.type == 2 ? `<button type="button" class="btn btn-info btn-sm showSubUnit" data-toggle="modal"
+                                                        data-target="#showSubUnitModal" data-row=${JSON.stringify(item)}>Sayğaclar
+                                                </button></td>` : ""}</td>
+                       <td><button type="button" class="btn btn-info btn-sm showData" data-toggle="modal"
+                                                        data-target="#showDataModal" data-row=${JSON.stringify(item)}>Ətraflı
+                                                </button></td>
+
+                       </tr>`
+                addDevice({'device_id': item.smartReaderId, update : update_ws, 'suffix': '0004'});
+            })
+            $('.table tbody').append(tbody)
+        });
+    }
+
+    $(document).on('click', '#filter-table', function () {
+        let smartReaderId = $(this).data("smartReaderId")
+        let startDate = document.getElementById("datePicStart").value;
+        let endDate = document.getElementById("datePicEnd").value;
+        $.get(`http://xxx.xx.xxx.xxx:8082/api/filtered-unit?smartReaderId=` + smartReaderId + '&startDate=' + startDate + '&endDate=' + endDate, function (data, status) {
+            $('.filtered-table tbody').empty()
+            let tbody = "";
+            data.forEach(function (item, index) {
+                tbody += ` <tr>
+                       <td>${index + 1}</td>
+                       <td>${item.smartReaderId}</td>
+                       <td>${item.unit ? item.unit : 0}</td>
+                       <td>${item.date}</td>
+                       <td><button type="button" class="btn btn-info btn-sm showTimeData" data-toggle="modal"
+                                                        data-target="#showTimeDataModal" data-row=${JSON.stringify(item)}>Ətraflı
+                                                </button></td>
+
+                       </tr>`
+            })
+            $('.filtered-table tbody').append(tbody)
+        });
+    })
+
+    $(document).on('click', '.showSubUnit', function () {
+        let row = $(this).data("row")
+        $.get(`http://xxx.xx.xxx.xxx:8082/api/grouped-units?smartReaderId=` + row.smartReaderId, function (data, status) {
+            $('.grouped-table tbody').empty()
+            let tbody = "";
+            data.forEach(function (item, index) {
+                tbody += ` <tr>
+                       <td>${index + 1}</td>
+                       <td>${item.smartReaderId}</td>
+                       <td>${item.counterId}</td>
+                       <td>${item.unit ? item.unit : 0}</td>
+                       </tr>`
+            })
+            $('.grouped-table tbody').append(tbody)
+            let sumOfUnit = 0;
+            data.forEach(function (item, index) {
+                sumOfUnit += item.unit
+            })
+            $('.grouped-table tbody').append(`<tr>
+                       <td></td>
+                       <td></td>
+                       <td></td>
+                       <td>${sumOfUnit}</td>
+                       </tr>`)
+        });
+    })
+
+    $(document).on('click', '.closeAddModal', function () {
+        document.getElementById("exampleInputUsername1").value = null
+        document.getElementById("exampleInputUsername2").value = null
+        document.getElementById("exampleInputUsername4").value = null
+    })
+
+    $(document).on('click', '.closeShowModal', function () {
+        document.getElementById("datePicStart").value = null;
+        document.getElementById("datePicEnd").value = null;
+    })
+
+
+
+    //////////////////////////////////////////
+
+
+    var socket;
+    var user_hash;
+    var isConnected = false;
+
+    var device_data = [];
+    var device_ids = {};
+
+
+
+    function addDevice(data){
+
+        if(device_data[data["device_id"]]){
+            device_data[data["device_id"]].push(data);
+        }else{
+            device_data[data["device_id"]] = [data];
+
+            key = data["device_id"].toString();
+
+            device_ids[key] = data["suffix"];
+
+        }
+
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    var init = function () {
+
+        //document.getElementById("conn-status").innerHTML = "<span style="color: yellow">Connecting...</span>";
+
+        //user_hash = document.getElementById("user-hash").value;
+        //$('.callcenter').hide();
+
+        socket = new WebSocket("ws://nbiot-test.sinam.net:1487");
+        //socket = new WebSocket("ws://172.16.208.162:1487");
+        //socket = new WebSocket("ws://127.0.0.1:1487");
+
+        socket.onopen = connectionOpen;
+        socket.onmessage = messageReceived;
+        // socket.onclose = connectionClosed;
+
+    };
+
+
+    function connectionOpen() {
+
+        isConnected = true;
+
+        console.log("Connection opened");
+
+        sendLogin();
+
+    }
+
+    function sendLogin(){
+
+        var login_message = {"action": "register", "device_ids": device_ids};
+        console.log("Login sent", login_message);
+        socket.send(JSON.stringify(login_message));
+
+
+    }
+
+    function messageReceived(e) {
+
+        var res = JSON.parse(e.data);
+
+        console.log("Ответ сервера: ", res);
+
+        console.log("device_data: ", device_data);
+
+        if(res["action"] == "device_data"){
+
+            console.log("Ответ action: ", res["action"]);
+            console.log("Ответ data: ", res["data"]);
+            console.log("Ответ device_id: ", res["device_id"]);
+
+            device_data[res["device_id"]].forEach(d => d.update(res));
+
+        }
+
+    }
+
+    function messageSend(action, data){
+
+        var message = {'action': action, 'data': data};
+
+        socket.send(JSON.stringify(message));
+
+    }
+
+
+
+    function connectionClosed(){
+
+        isConnected = false;
+        setTimeout(init, 1000);
+
+    }
+
+
+
+    window.onload = function(){
+        init();
+    }
+
+
+    function update_ws(res){
+        $(".table").find('tr').each(function(i,el){
+            var tds = $(this).find('td');
+            console.log(tds.eq(4).text())
+            console.log(res["device_id"],"websoc")
+            console.log(tds.eq(2).text(),"table")
+
+            if (tds.eq(2).text() == res["device_id"]) {
+                tds.eq(4).text(res["data"][0]["Units"]+"test")
+            }
+        });
+    }
+
+</script>
+</body>
+</html>
